@@ -1,0 +1,37 @@
+# TigerTech-Program-Review
+Partly finished program for the botball 2020 season
+
+
+
+#include <kipr/wombat.h>
+
+int main()
+{
+    enable_servos();
+        set_servo_position(0,0);
+    
+    {
+        motor(0,-80);
+        msleep(400);
+    }
+    {
+        motor(1,-90);
+        msleep(400);
+    }
+    {
+        motor(1,-60);
+        msleep(400);
+    }
+    {
+        motor(0,-120);
+        msleep(400);
+    }
+
+
+    motor(1,-100);
+    motor(0,-100);
+    msleep(1000);
+
+    printf("Hello World\n");
+    return 0;
+}
