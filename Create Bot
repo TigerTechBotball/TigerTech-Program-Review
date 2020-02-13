@@ -1,0 +1,148 @@
+#include <kipr/botball.h>
+void arm(int position);
+void claw(int position);
+void right_90();
+void left_90();
+void forward(int miliseconds);
+void back(int miliseconds);
+void side_arm(int position);
+int main()
+    ////////////////////////////////////////////////////////
+    //                                                    //
+    //                by,                                 //
+    //                     Jeremy & Hayden                //
+    //                                                    //
+    //                                                    //
+    ////////////////////////////////////////////////////////
+
+{
+
+    enable_servos();
+    create_connect();
+    // start up
+
+    arm(2000);
+    claw(2000);
+    side_arm(0);
+
+    //driving out of the starting box
+
+    right_90();
+    forward(1500);
+
+    //turning left
+
+    left_90();
+
+    //driving until the side arm is in between the green and red ore boxes
+    set_create_distance(0);
+    msleep(200);
+    while(get_create_distance() < 452)
+    {
+        if(analog(0) < 3500)
+        {
+            create_drive_direct(10,90);
+        }
+        else
+        {
+            create_drive_direct(90,10);
+        }
+    }
+
+    //lower side arm
+
+    side_arm(2000);
+    
+    //
+    
+    create_drive_direct(0,0);
+    msleep(500);
+
+    //pushing green into the box closest to the starting box
+    
+    create_drive_direct(-70,-70);
+    msleep(1500);
+    
+    //driving forward
+    
+    forward(600);
+    
+    //rising claw so we can move the red into the middle box
+    
+    side_arm(0);
+    
+    //turning to position so we  can move the red into the middle box
+    
+    create_drive_direct(30,60);
+    msleep(2500);
+ 
+   create_drive_direct(-10,-60);
+   msleep(2000);
+    
+    
+    
+     create_drive_direct(-30,-10);
+    msleep(1500);
+    
+    //pause
+    create_drive_direct(0,0);
+    msleep(500);
+    
+    //claw
+    side_arm(0);
+    //red into middle box
+    
+    create_drive_direct(-30,-10);
+    msleep(1500);
+    
+    return 0;
+}
+//raise and lower claw
+void arm(int position)
+{
+    set_servo_position(1,position);
+    msleep(100);
+}
+//open and close claw 
+void claw(int position)
+{
+    set_servo_position(1,position);
+    msleep(100);
+}
+// right turn
+// if the number is lossed wheels are (200,-200) and 950ms
+void right_90()
+{
+    create_drive_direct(200,-200);
+    msleep(950);
+
+}
+// left turn
+// if the number is lossed wheels are (-200,200) and 950ms
+void left_90()
+{
+    create_drive_direct(-200,200);
+    msleep(950);
+}
+// forward movement
+void forward(int miliseconds)
+{
+    create_drive_direct(200,200);
+    msleep(miliseconds);
+}
+// moving bakf
+
+void back(int miliseconds)
+
+{
+    create_drive_direct(-200,-200);
+    msleep(miliseconds);
+}
+//side arm
+void side_arm(int position)
+{
+    set_servo_position(3,position);
+    msleep(100);
+}
+
+
