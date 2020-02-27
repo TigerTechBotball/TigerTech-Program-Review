@@ -1,37 +1,190 @@
-# TigerTech-Program-Review
-Partly finished program for the botball 2020 season
-
-
-
 #include <kipr/wombat.h>
+//Index
+void forward(distance);
+void backward(distance);
+void forwardfail(distance);
+void backwardfail(distance);
+void right(milliseconds);
+void left(milliseconds);
+void openbulldozer();
+void closebulldozer();
+void linefollow(distance);
+void stop();
+int main()  
+    //Left Wheel=0
+    //Right Wheel=1
+    //Extender Servo=0
 
-int main()
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 {
     enable_servos();
-        set_servo_position(0,0);
+    closebulldozer();
+    stop();
+    //Driving Forward to end of starting box
+    forward(1400);
+    stop();
+    //turning to face ramp
+    right(1200);
+    stop();
+    //driving toward the ramp
+    forward(3200);
+    stop();
+    //removing cupler from ramp
+    while(analog(5) < 3000)
+    {
+        motor(1,-500);
+        motor(0,500);
+    }
+   stop();
+// Putting cupler in the starting box(cupler doesnt have to be in the starting box)
+    forward(1350);
+    left(2000);
+    stop();
+    forward(1000);
+    stop();
+     right(2100);
+    stop();
+    forward(3000);
+    stop();
+// Lining up with long black line
+   
+    left(1500);
+    stop();
+    openbulldozer();
+    //getting past shadow
+    forward(2000);
     
-    {
-        motor(0,-80);
-        msleep(400);
-    }
-    {
-        motor(1,-90);
-        msleep(400);
-    }
-    {
-        motor(1,-60);
-        msleep(400);
-    }
-    {
-        motor(0,-120);
-        msleep(400);
-    }
-
-
-    motor(1,-100);
-    motor(0,-100);
+    //linefollowing
+    linefollow(9000);
+    stop();
+    set_servo_position(0,1000);
     msleep(1000);
+   linefollow(2000);
+    //Lining uo to storage
+    right(400);
+    forward(2000);
+        backward(1000);
 
-    printf("Hello World\n");
+
+
+ closebulldozer();
+
     return 0;
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//FUNCTIONS
+void forward(milliseconds)
+{
+    motor(0,75);
+    motor(1,75);
+    msleep(milliseconds);
+}
+
+void backward(milliseconds)
+{
+    motor(0,-75);
+    motor(1,-75);
+    msleep(milliseconds);
+}
+//work in progress
+void forwardfail(distance)
+{
+    cmpc(0);
+    cmpc(1);
+    while (gmpc(0) < distance)
+    {
+
+        if(gmpc(0) < gmpc(1))
+        {
+            motor(0,75);
+            motor(1,25);
+
+        }
+        else
+
+        {
+            motor(0,25);
+            motor(1,75);
+        }
+    }
+    motor(0,0);
+    motor(1,0);
+    msleep(1000);
+}
+
+void backwardfail(distance)
+{
+    cmpc(0);
+    cmpc(1);
+    while (gmpc(0) > distance)
+    {
+
+        if(gmpc(0) > gmpc(1))
+        {
+            motor(0,-75);
+            motor(1,-25);
+
+        }
+        else
+
+        {
+            motor(0,-25);
+            motor(1,-75);
+        }
+    }
+    motor(0,0);
+    motor(1,0);
+    msleep(1000);
+}
+void right(milliseconds)
+{
+    motor(1,75);
+    motor(0,-75);
+    msleep(milliseconds);
+}
+
+void left(milliseconds)
+{
+    motor(1,-75);
+    motor(0,75);
+    msleep(milliseconds);
+}
+
+void openbulldozer()
+{
+    set_servo_position(0,0);
+    msleep(1000);
+}
+
+
+void closebulldozer()
+{
+    set_servo_position(0,2047);
+    msleep(1000);
+}
+void linefollow(distance)
+{
+    cmpc(0);
+    while(gmpc(0) < distance)
+    {
+        if(analog(5) < 3000)
+        {
+            motor(0,75);
+            motor(1,25);
+        }
+        else
+        {
+            motor(0,25);
+            motor(1,75);   
+        }
+    }
+}
+
+void stop()
+{
+    motor(0,0);
+    motor(1,0);
+    msleep(600);
+}
+
+
