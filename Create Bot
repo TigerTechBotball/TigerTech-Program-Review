@@ -11,7 +11,7 @@ int main()
     //                                                    //
     //                by,                                 //
     //                     Jeremy & Hayden                //
-    //                                                    //
+    //                                    Feat(Austin)    //
     //                                                    //
     ////////////////////////////////////////////////////////
 
@@ -24,7 +24,8 @@ int main()
     arm(2000);
     claw(2000);
     side_arm(0);
-
+	
+    disable_servos();
     //driving out of the starting box
 
     right_90();
@@ -37,9 +38,9 @@ int main()
     //driving until the side arm is in between the green and red ore boxes
     set_create_distance(0);
     msleep(200);
-    while(get_create_distance() < 452)
+    while(get_create_distance() < 900)
     {
-        if(analog(0) < 3500)
+        if(analog(0) < 3300)
         {
             create_drive_direct(10,90);
         }
@@ -50,50 +51,116 @@ int main()
     }
 
     //lower side arm
-
+ 	enable_servos();
     side_arm(2000);
-    
+
     //
-    
+
     create_drive_direct(0,0);
     msleep(500);
 
     //pushing green into the box closest to the starting box
-    
-    create_drive_direct(-70,-70);
-    msleep(1500);
-    
-    //driving forward
-    
-    forward(600);
-    
-    //rising claw so we can move the red into the middle box
-    
-    side_arm(0);
-    
-    //turning to position so we  can move the red into the middle box
-    
-    create_drive_direct(30,60);
-    msleep(2500);
- 
-   create_drive_direct(-10,-60);
-   msleep(2000);
-    
-    
-    
-     create_drive_direct(-30,-10);
-    msleep(1500);
-    
+
+    create_drive_direct(-30,-30);
+    msleep(8000);
+
+  
+
     //pause
     create_drive_direct(0,0);
     msleep(500);
+      
     
-    //claw
+     
+    
+    
+
+    
+
+    //pause
+    create_drive_direct(0,0);
+    msleep(500);
+
+    //side arm down
+    side_arm(2000);
+  
+    //pause
+    create_drive_direct(0,0);
+    msleep(500);
+
+   
+   
+   //pause
+    create_drive_direct(0,0);
+    msleep(500);
+    
+    disable_servos();
+    
+	//turning to astronates<- i don't can if this is spell wrong
+    	// turn to rise the side_arm
+    create_drive_direct(-40,40);
+        msleep(700);
+    create_drive_direct(50,-50);
+        msleep(500);
+    create_drive_direct(40,40);
+    msleep(1200);
+    // side_arm()
+    enable_servos();
     side_arm(0);
-    //red into middle box
+    //pause
+    create_drive_direct(0,0);
+    msleep(500);
+        create_drive_direct(50,-50);
+        msleep(650);
     
-    create_drive_direct(-30,-10);
-    msleep(1500);
+    // pause
+    create_drive_direct(0,0);
+        msleep(500);
+    	//riseing side_arm
+    enable_servos();
+        
+   		 side_arm(0);
+    //  meple knock
+     create_drive_direct(50,-50);
+     msleep(1300);
+    
+    create_drive_direct(20,20);
+     msleep(3000);
+    set_create_distance(0);
+    msleep(200);
+    
+    // going to starting box line
+    right_90();
+  
+      set_create_distance(0);
+    msleep(200);
+    while(get_create_distance() < 502)
+    {
+        if(analog(0) < 3300)
+        {
+            create_drive_direct(90,10);
+        }
+        else
+        {
+            create_drive_direct(10,90);
+        }
+    }
+    //staighting
+    right_90();
+    right_90();
+    back(1500);
+    // right to minecrafts
+    forward(630);
+      create_drive_direct(200,-200);
+    msleep(650);
+    // driving to minecrafts
+    
+  set_create_distance(0);
+    msleep(200);
+    while(get_create_distance() < 352)
+    {
+         create_drive_direct(100,100);
+    }
     
     return 0;
 }
@@ -144,5 +211,3 @@ void side_arm(int position)
     set_servo_position(3,position);
     msleep(100);
 }
-
-
